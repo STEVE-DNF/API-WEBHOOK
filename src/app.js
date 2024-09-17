@@ -19,6 +19,8 @@ const limiter = rateLimit({
 
 const app = express()
 
+app.set('trust proxy', true);
+
 app.use(helmet())
 
 app.use('/api',limiter)
