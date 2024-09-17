@@ -1,0 +1,26 @@
+2024/03/09-01:18:12.644 14c54 Reusing MANIFEST C:\Users\fortn\OneDrive\Documentos\PROYECTO AGAT\API_WH\src\data\session-65e5bd73af6f7a750f667553\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2024/03/09-01:18:12.645 14c54 Recovering log #1212
+2024/03/09-01:18:12.752 14c54 Reusing old log C:\Users\fortn\OneDrive\Documentos\PROYECTO AGAT\API_WH\src\data\session-65e5bd73af6f7a750f667553\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/001212.log 
+2024/03/09-01:18:29.683 162f0 Level-0 table #1224: started
+2024/03/09-01:18:29.726 162f0 Level-0 table #1224: 1084179 bytes OK
+2024/03/09-01:18:29.728 162f0 Delete type=0 #1212
+2024/03/09-01:18:31.560 141f4 Compacting 1@1 + 8@2 files
+2024/03/09-01:18:31.719 141f4 Generated table #1225@1: 48392 keys, 2215225 bytes
+2024/03/09-01:18:31.796 141f4 Generated table #1226@1: 2559 keys, 2162625 bytes
+2024/03/09-01:18:31.874 141f4 Generated table #1227@1: 2193 keys, 2166673 bytes
+2024/03/09-01:18:31.966 141f4 Generated table #1228@1: 13495 keys, 2187468 bytes
+2024/03/09-01:18:32.078 141f4 Generated table #1229@1: 26052 keys, 2269790 bytes
+2024/03/09-01:18:32.182 141f4 Generated table #1230@1: 40801 keys, 2195580 bytes
+2024/03/09-01:18:32.333 141f4 Generated table #1231@1: 106690 keys, 2258070 bytes
+2024/03/09-01:18:32.353 141f4 Generated table #1232@1: 9889 keys, 218645 bytes
+2024/03/09-01:18:32.353 141f4 Compacted 1@1 + 8@2 files => 15674076 bytes
+2024/03/09-01:18:32.354 141f4 compacted to: files[ 0 0 8 0 0 0 0 ]
+2024/03/09-01:18:32.354 141f4 Delete type=2 #1214
+2024/03/09-01:18:32.354 141f4 Delete type=2 #1215
+2024/03/09-01:18:32.354 141f4 Delete type=2 #1216
+2024/03/09-01:18:32.354 141f4 Delete type=2 #1217
+2024/03/09-01:18:32.354 141f4 Delete type=2 #1218
+2024/03/09-01:18:32.354 141f4 Delete type=2 #1219
+2024/03/09-01:18:32.354 141f4 Delete type=2 #1220
+2024/03/09-01:18:32.354 141f4 Delete type=2 #1221
+2024/03/09-01:18:32.355 141f4 Delete type=2 #1224

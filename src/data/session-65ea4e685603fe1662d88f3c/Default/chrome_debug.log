@@ -1,0 +1,8 @@
+[0307/183157.391:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Feature xr-spatial-tracking's parameters are ignored.", source:  (0)
+[0307/183157.392:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.", source:  (0)
+[0307/183157.392:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.", source:  (0)
+[0307/183157.392:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'gamepad'.", source:  (0)
+[0307/183157.392:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'local-fonts'.", source:  (0)
+[0307/183157.392:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'window-management'.", source:  (0)
+[0307/183157.393:INFO:CONSOLE(0)] "Error with Permissions-Policy-Report-Only header: Feature clipboard-read's parameters are ignored.", source:  (0)
+[0307/183201.746:INFO:CONSOLE(2)] "Uncaught (in promise) Error: this.sessionManager.notifyQr is not a function", source:  (2)

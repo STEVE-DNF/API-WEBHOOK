@@ -1,0 +1,10 @@
+const {orderManagementModels:{addressModel}} = require('../../models')
+const handleFactory = require('../handleFactory')
+
+exports.createAddress= handleFactory.createOne(addressModel)
+exports.updateAddress= handleFactory.updateOne(addressModel)
+exports.getAddress = handleFactory.getOne(addressModel)
+exports.deleteAddress = handleFactory.deleteOne(addressModel)
+exports.activeAddress = handleFactory.ActiveOne(addressModel)
+exports.getAllAddress= handleFactory.getAll(addressModel)
+exports.countDocuments= handleFactory.countDocuments(addressModel)

@@ -1,0 +1,10 @@
+const {orderManagementModels:{scheduleModel}} = require('../../models')
+const handleFactory = require('../handleFactory')
+
+exports.createSchedule= handleFactory.createOne(scheduleModel)
+exports.updateSchedule= handleFactory.updateOne(scheduleModel)
+exports.getSchedule = handleFactory.getOne(scheduleModel)
+exports.deleteSchedule = handleFactory.deleteOne(scheduleModel)
+exports.activeSchedule = handleFactory.ActiveOne(scheduleModel)
+exports.getAllSchedule= handleFactory.getAll(scheduleModel)
+exports.getModelConstructor= handleFactory.getModelConstructor(scheduleModel)

@@ -1,0 +1,30 @@
+[{
+    "_id": {
+      "$oid": "65d18740f2dc243d220484aa"
+    },
+    "method": {
+      "en": "Yape",
+      "es": "Yape"
+    },
+    "active": true
+  },
+  {
+    "_id": {
+      "$oid": "65d18776f2dc243d220484ab"
+    },
+    "method": {
+      "en": "Plin",
+      "es": "Plin"
+    },
+    "active": true
+  },
+  {
+    "_id": {
+      "$oid": "65d18795f2dc243d220484ac"
+    },
+    "method": {
+      "en": "Cash",
+      "es": "Efectivo"
+    },
+    "active": true
+}]

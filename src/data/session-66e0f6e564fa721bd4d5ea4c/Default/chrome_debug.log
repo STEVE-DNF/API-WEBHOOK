@@ -1,0 +1,24 @@
+[0910/210150.586:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Feature xr-spatial-tracking's parameters are ignored.", source:  (0)
+[0910/210150.586:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Origin trial controlled feature not enabled: 'attribution-reporting'.", source:  (0)
+[0910/210150.586:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'compute-pressure'.", source:  (0)
+[0910/210150.586:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Origin trial controlled feature not enabled: 'interest-cohort'.", source:  (0)
+[0910/210150.586:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'private-state-token-issuance'.", source:  (0)
+[0910/210150.586:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Origin trial controlled feature not enabled: 'shared-storage'.", source:  (0)
+[0910/210150.586:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'shared-storage-select-url'.", source:  (0)
+[0910/210150.586:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'private-state-token-redemption'.", source:  (0)
+[0910/210150.586:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'unload'.", source:  (0)
+[0910/210150.586:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'window-management'.", source:  (0)
+[0910/210150.590:ERROR:entry_impl.cc(1072)] No file for 80000004
+[0910/210150.590:ERROR:entry_impl.cc(1072)] No file for 80000005
+[0910/210150.591:ERROR:entry_impl.cc(1072)] No file for 80000006
+[0910/210150.593:ERROR:entry_impl.cc(1072)] No file for 80000002
+[0910/210150.596:ERROR:entry_impl.cc(1072)] No file for 80000007
+[0910/210150.597:ERROR:entry_impl.cc(1072)] No file for 8000000a
+[0910/210150.597:ERROR:entry_impl.cc(1072)] No file for 8000005f
+[0910/210150.597:ERROR:entry_impl.cc(1072)] No file for 80000009
+[0910/210150.598:ERROR:entry_impl.cc(1072)] No file for 80000008
+[0910/210153.764:INFO:CONSOLE(0)] "The resource https://static.whatsapp.net/rsrc-translations.php/v6iSZF4/yL/l/es_LA/QbWEJN1Atw8VXgil27PkiKaMMWwcn9VT9vsWqehdEtWw.js?_nc_x=Ij3Wp8lg5Kz was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.", source: https://web.whatsapp.com/ (0)
+[0910/210153.764:INFO:CONSOLE(0)] "The resource https://static.whatsapp.net/rsrc-translations.php/v6ilY94/yW/l/es_LA/19wJdt29UVm.js?_nc_x=Ij3Wp8lg5Kz was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.", source: https://web.whatsapp.com/ (0)
+[0910/210153.764:INFO:CONSOLE(0)] "The resource https://static.whatsapp.net/rsrc-translations.php/v6iXw74/yO/l/es_LA/l5ipAduAicF.js?_nc_x=Ij3Wp8lg5Kz was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.", source: https://web.whatsapp.com/ (0)
+[0910/210153.764:INFO:CONSOLE(0)] "The resource https://static.whatsapp.net/rsrc-translations.php/v6iW9q4/yG/l/es_LA/dhJwDih-oXK.js?_nc_x=Ij3Wp8lg5Kz was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.", source: https://web.whatsapp.com/ (0)
+[0910/210153.764:INFO:CONSOLE(0)] "The resource https://static.whatsapp.net/rsrc.php/v3/yT/l/0,cross/lD1wc3CLWqJq26Y3hNDRvu.css?_nc_x=Ij3Wp8lg5Kz was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.", source: https://web.whatsapp.com/ (0)

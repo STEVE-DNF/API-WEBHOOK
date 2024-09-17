@@ -1,0 +1,148 @@
+{
+    "es": {
+      "address": {
+        "list": "Para agregar una dirección o más, debes tener un pedido pendiente.",
+        "view": "Direcciones:"
+      },
+      "greeting": {
+        "welcome": "Espero que estés teniendo un gran día. ¿En qué puedo ayudarte hoy?",
+        "farewell": "¡Hasta luego! No solo tengas un buen día, ten un gran día."
+      },
+      "order": {
+        "requests": {
+          "consult": "Por favor, indica qué deseas ordenar, especificando la cantidad y el nombre del plato, por favor.",
+          "default": "Por favor, no entendí. ¿Puedes volver a consultar?"
+        },
+        "products": {
+          "add": "Producto agregado con éxito. ¿Desea confirmar el pedido, agregar más productos o cancelar?",
+          "update": "Se actualizo correctamente el producto. ¿Desea confirmar el pedido, agregar más productos o cancelar?",
+          "quantity": "Upps no tenemos esa cantidad",
+          "null": "Creo que no tenemos ese producto, lo siento",
+          "quantity_error": "La cantidad debe ser mayor a 0 , porfavor"
+        },
+        "confirmations": {
+          "confirmation": "¡Confirmación de pedido! Tu pedido ha sido confirmado. Consulta los métodos de pago disponibles o pregunta por tu método de pago preferido para verificar.",
+          "paymethod": "¡Confirmación de pedido! Tu pedido ha sido confirmado. Pronto te presentaremos los métodos de pago disponibles.\nMétodos de pago disponibles: ",
+          "error": "Hubo un error inesperado al confirmar tu pedido. ¿Puedes confirmar tu pedido nuevamente?",
+          "default": "Por favor, no entendí. ¿Puedes volver a confirmar tu pedido?"
+        },
+        "cancelations": {
+          "cancelation": "¡Cancelación de pedido! Tu pedido ha sido cancelado.",
+          "cancelationother": "¡Cancelación de pedido! Tu pedido ha sido cancelado. Por favor, espera; recibirás una respuesta de nuestro equipo de soporte pronto.",
+          "error": "Hubo un error inesperado al cancelar tu pedido. ¿Puedes cancelar tu pedido nuevamente?",
+          "default": "Por favor, no entendí. ¿Puedes volver a cancelar tu pedido?"
+        },
+        "payments": {
+          "confirmationtypemethod": {
+            "notexist": "Por favor, ingresa otro método de pago. ",
+            "exist": "Método de pago aceptado"
+          },
+          "consulttypemethod": {
+            "notexist": "Por ahora no tenemos ese metodo de pago",
+            "exist": "Si existe el metodo de pago"
+          },
+          "typemethods": "Métodos de pago disponibles: ",
+          "typemethodsconfirm": "Que metodo de pago elegiste ?  ",
+          "consultmethodsconfirm": "Tenemos estos metodos disponibles por ahora.  ",
+          "null": "Por ahora no tenemos ningun metodo de pago disponible ,gracias",
+          "error": {
+            "add": "Tuvimos un problema al agregar tu orden al método de pago. Por favor, agrega el método de pago nuevamente.",
+            "throw": "Lo siento, hubo un problema al crear el método de pago."
+          },
+          "default":"Agrega porfavor tu metodo de pago"
+        },
+        "type": {
+          "success": "¡Excelentes noticias! Tu pedido ya está en camino hacia ti.",
+          "failure": "Lamentamos informarte que tu pedido no pudo ser procesado y ha sido rechazado."
+        },
+        "error": {
+          "CREATE_ORDER": "Hubo un error al crear tu pedido. Por favor, inténtalo de nuevo.",
+          "UPDATE_ORDER": "Hubo un problema al actualizar tu pedido. Por favor, vuelve a intentarlo.",
+          "GET_ORDER": "Hubo un error al obtener tu pedido. Por favor, inténtalo de nuevo.",
+          "GET_ALL_ORDER": "Hubo un problema al obtener todos los pedidos. Por favor, inténtalo de nuevo.",
+          "UPDATE_ORDER_TOTAL_ORDER": "Hubo un error al actualizar el total de tu pedido. Por favor, vuelve a intentarlo.",
+          "GET_ORDER_ORDER": "Hubo un problema al obtener el detalle de tu pedido. Por favor, inténtalo de nuevo.",
+          "UPDATE_STATE_ACTIVE_ORDER": "Hubo un error al actualizar el estado de tu pedido a activo. Por favor, inténtalo de nuevo.",
+          "UPDATE_STATE_INACTIVE_ORDER": "Hubo un problema al actualizar el estado de tu pedido a inactivo. Por favor, inténtalo de nuevo.",
+          "UPDATE_STATE_PENDING_ORDER": "Hubo un error al actualizar el estado de tu pedido a pendiente. Por favor, inténtalo de nuevo.",
+          "GET_PRODUCTS_ORDER": "Hubo un problema al obtener los productos de tu pedido. Por favor, inténtalo de nuevo.",
+          "GET_RETURN_ORDER": "Hubo un error al obtener las devoluciones de tu pedido. Por favor, inténtalo de nuevo.",
+          "ADD_PRODUCT_ORDER": "Hubo un problema al agregar un producto a tu pedido. Por favor, vuelve a intentarlo.",
+          "UPDATE_PRODUCT_ORDER": "Hubo un error al actualizar un producto en tu pedido. Por favor, inténtalo de nuevo."
+        }
+      },
+      "menu": {
+        "bigletter": "A continuación, se muestran los menús disponibles:",
+        "default": "Por favor, no entendí. ¿Puedes volver a consultar sobre el menú?",
+        "null": "Creo que aun no tenemos los menu listos , gracias por tu paciencia"
+      },
+      "restaurant": {
+          "status":{
+            "inactive": "Ahora no tenemos acceso al servicio , gracias por tu paciencia",
+            "pending": ""
+          },
+          "address": "Te esperamos",
+          "error":{
+            "CREATE_RESTAURANT": "Error al crear el restaurante. Por favor, intenta de nuevo.",
+            "UPDATE_RESTAURANT": "Error al actualizar la información del restaurante. Por favor, intenta de nuevo.",
+            "GET_RESTAURANT": "Error al obtener el restaurante. Por favor, intenta de nuevo",
+            "UPDATE_STATE_ACTIVE_RESTAURANT": "Error al actualizar el estado a activo del restaurante. Por favor, intenta de nuevo.",
+            "UPDATE_STATE_INACTIVE_RESTAURANT": "Error al actualizar el estado a inactivo del restaurante. Por favor, intenta de nuevo.",
+            "UPDATE_STATE_PENDING_RESTAURANT": "Error al actualizar el estado a pendiente del restaurante. Por favor, intenta de nuevo.",
+            "ADD_MENU_RESTAURANT": "Error al añadir menú al restaurante. Por favor, intenta de nuevo.",
+            "GET_ADDRESS_RESTAURANT": "Error al obtener la dirección del restaurante. Por favor, intenta de nuevo.",
+            "GET_TIME_RESTAURANT": "Error al obtener el horario del restaurante. Por favor, intenta de nuevo.",
+            "REMOVE_ADDRESS_RESTAURANT": "Error al eliminar la dirección del restaurante. Por favor, intenta de nuevo.",
+            "REMOVE_MENU_RESTAURANT": "Error al eliminar el menú del restaurante. Por favor, intenta de nuevo.",
+            "NONEXIST": "Error al eliminar el menú del restaurante. Por favor, intenta de nuevo."
+          }
+      },
+      "delivery": {
+        "message": "Direcciones:",
+        "default": "Consulta de nuevo, por favor.",
+        "null": "Usted aun no agrego ninguna direccion",
+        "consult": "Por favor, envíanos tu dirección escrita o comparte directamente tu ubicación a través de WhatsApp :",
+        "add": {
+          "success": "La dirección se agregó correctamente.",
+          "failure": "Para agregar una dirección, debes tener un pedido pendiente."
+        },
+        "error": {
+          "add_order": "Ocurrió un error al agregar la dirección,ingresa de nuevo tu direccion",
+          "inactive_order": "Ocurrió un error al agregar la dirección."
+        }
+      },
+      "customer": {
+        "active": "",
+        "inactive": "Hemos recibido tu solicitud. Por favor, espera mientras procesamos tu información.",
+        "blocked": "Tu cuenta está temporalmente bloqueada. Dentro de 30 minutos podrás volver a enviar mensajes. Gracias por tu paciencia.",
+        "unlocked": "Tu cuenta ha sido desbloqueada. ¡Gracias por tu paciencia!",
+        "unknown": "Lo sentimos, estamos teniendo dificultades para identificar tu cuenta en este momento. Estamos trabajando en resolverlo lo más pronto posible.",
+        "error": {
+            "CREATE_CUSTOMER": "Ha ocurrido un error al intentar crear tu cuenta. Por favor, intenta nuevamente más tarde.",
+            "UPDATE_STATE_CUSTOMER": "Ha ocurrido un error al intentar actualizar el estado de tu cuenta. Por favor, intenta nuevamente más tarde.",
+            "ADD_PRODUCT_CUSTOMER": "Ha ocurrido un error al intentar añadir un producto a tu cuenta. Por favor, intenta nuevamente más tarde.",
+            "GET_PRODUCT_CUSTOMER": "Ha ocurrido un error al intentar obtener tus productos. Por favor, intenta nuevamente más tarde.",
+            "ADD_CONVERSATION_CUSTOMER": "Ha ocurrido un error al intentar guardar tu conversación.",
+            "GET_CONVERSATION_CUSTOMER": "Ha ocurrido un error al intentar obtener tus conversaciones. Por favor, intenta nuevamente más tarde.",
+            "DRECREASE_ATTEMPT_CUSTOMER": "Ha ocurrido un error. Por favor, intenta nuevamente más tarde.",
+            "RESET_ATTEMPT_CUSTOMER": "Ha ocurrido un error al intentar resetear tu cuenta. Por favor, intenta nuevamente más tarde.",
+            "GET_ALL_CUSTOMER": "Ha ocurrido un error al intentar obtener información. Por favor, intenta nuevamente más tarde.",
+            "GET_NUMBER_CUSTOMER": "Ha ocurrido un error al intentar obtener tu número de cliente. Por favor, intenta nuevamente más tarde."
+        }
+      },
+      "error": "No te preocupes ,estara soluciona lo mas pronto posible",
+      "typeError": "Para una interacción adecuada, envía un mensaje en formato texto. ¡Gracias!",
+      "default": "¿En qué puedo ayudarte? :)",
+      "warning": "Por favor, evite enviar mensajes vacíos.Si continúa violando nuestras normas, su cuenta podría ser bloqueada. INTENTOS-",
+      "APIError": {
+        "er1001":{
+          "er01":"Porfavor, ingrese una direccion que pertenezca a Tacna.",
+          "er02":"Dirección rechazada debido a baja confianza.",
+          "er03":"Tenemos problemas para validar su dirección",
+          "er04":"No se encontró la dirección.",
+          "er05":"Tenemos problemas para validar su dirección",
+          "er00":"El servicio no se encuentra activo,gracias"
+        }
+      }
+    }
+  }

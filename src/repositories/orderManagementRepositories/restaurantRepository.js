@@ -1,0 +1,11 @@
+const {orderManagementModels:{restaurantModel}} = require('../../models')
+const handleFactory = require('../handleFactory')
+
+exports.createRestaurant= handleFactory.createOne(restaurantModel)
+exports.updateRestaurant= handleFactory.updateOne(restaurantModel)
+exports.getRestaurant = handleFactory.getOne(restaurantModel)
+exports.deleteRestaurant = handleFactory.deleteOne(restaurantModel)
+exports.ActiveRestaurant = handleFactory.ActiveOne(restaurantModel)
+exports.getAllRestaurant= handleFactory.getAll(restaurantModel)
+exports.getInstance= handleFactory.getModel(restaurantModel)
+exports.getCountArray= handleFactory.getCountArrayAgregate(restaurantModel)

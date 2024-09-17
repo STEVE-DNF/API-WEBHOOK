@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/a2e26957-685f-4678-a24c-cde76e9e64f1/AppServices/subscriptions/a2e26957-685f-4678-a24c-cde76e9e64f1/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/whastappAPIforNode",
+    "appService.deploySubpath": "src"
+}

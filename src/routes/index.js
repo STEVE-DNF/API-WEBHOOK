@@ -1,0 +1,38 @@
+const express = require("express")
+const route = express.Router()
+
+const registrationRoute=require("./registrationRoute")
+const restaurantRoute=require("./restaurantRoute")
+const categoryRoute=require("./categoryRoute")
+const productRoute=require("./productRoute")
+const paymentRoute=require("./paymentRoute")
+const userRoute=require("./userRoute")
+const authRoute=require("./authRoute")
+const systemRoute = require("./systemRoute")
+const scheduleRoute = require("./scheduleRoute")
+const sessionRoute = require("./sessionRoute")
+const roomRoute = require("./roomRoute")
+const typePaymentRoute = require("./typePaymentRoute")
+const orderRoute = require("./orderRoute")
+const modelRoute = require("./modelRoute")
+const tes = require("./tes")
+
+route.use("/restaurant",restaurantRoute)
+route.use("/product",productRoute)
+route.use("/order",orderRoute)
+route.use("/registration",registrationRoute)
+route.use("/auth",authRoute)
+route.use("/category",categoryRoute)
+route.use("/payment",paymentRoute)
+route.use("/user",userRoute)
+route.use("/system",systemRoute)
+route.use("/schedule",scheduleRoute)
+route.use("/session",sessionRoute)
+route.use("/room",roomRoute)
+route.use("/typePayment",typePaymentRoute)
+route.use("/model",modelRoute)
+
+//CREAR USUARIOS TEMPORAL
+route.use("/test",tes)
+
+module.exports = route

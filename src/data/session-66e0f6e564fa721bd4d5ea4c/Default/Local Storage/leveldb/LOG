@@ -1,0 +1,4 @@
+2024/09/10-21:01:50.019 2590 Creating DB C:\Users\fortn\Videos\API_WH\src\data\session-66e0f6e564fa721bd4d5ea4c\Default\Local Storage\leveldb since it was missing.
+2024/09/10-21:01:50.025 2590 Reusing MANIFEST C:\Users\fortn\Videos\API_WH\src\data\session-66e0f6e564fa721bd4d5ea4c\Default\Local Storage\leveldb/MANIFEST-000001
+2024/09/10-21:01:50.026 2590 Recovering log #3
+2024/09/10-21:01:50.026 2590 Reusing old log C:\Users\fortn\Videos\API_WH\src\data\session-66e0f6e564fa721bd4d5ea4c\Default\Local Storage\leveldb/000003.log 

@@ -1,0 +1,4 @@
+2024/09/09-07:22:12.151 76ec Reusing MANIFEST C:\Users\fortn\Videos\API_WH\src\data\session-66d774102765b302b3146c9e\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2024/09/09-07:22:12.151 76ec Recovering log #959
+2024/09/09-07:22:12.190 76ec Reusing old log C:\Users\fortn\Videos\API_WH\src\data\session-66d774102765b302b3146c9e\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000959.log 
+2024/09/09-07:22:13.731 76ec Manual compaction at level-0 from ' e\x01\x00\x00\x00' @ 72057594037927935 : 1 .. ' f\x01\x00\x00\x00' @ 0 : 0; will stop at (end)

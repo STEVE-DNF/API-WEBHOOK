@@ -1,0 +1,13 @@
+const {systemSessionsModels:{sessionModel}} = require('../../models')
+const handleFactory = require('../handleFactory')
+
+exports.createSession= handleFactory.createOne(sessionModel)
+exports.updateSession= handleFactory.updateOne(sessionModel)
+exports.getSession = handleFactory.getOne(sessionModel)
+exports.deleteSession = handleFactory.deleteOne(sessionModel)
+exports.getAllSession= handleFactory.getAll(sessionModel)
+exports.getInstance= handleFactory.getModel(sessionModel)
+exports.activeSession = handleFactory.ActiveOne(sessionModel)
+exports.countDocumentsSession = handleFactory.countDocuments(sessionModel)
+exports.getModelConstructor= handleFactory.getModelConstructor(sessionModel)
+exports.clearSession = handleFactory.clearOne(sessionModel)

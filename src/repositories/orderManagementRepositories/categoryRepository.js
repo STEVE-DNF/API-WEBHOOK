@@ -1,0 +1,11 @@
+const {orderManagementModels:{categoryModel}} = require('../../models')
+const handleFactory = require('../handleFactory')
+
+exports.createCategory= handleFactory.createOne(categoryModel)
+exports.updateCategory= handleFactory.updateOne(categoryModel)
+exports.getCategory = handleFactory.getOne(categoryModel)
+exports.getCategoryId = handleFactory.getOneId(categoryModel)
+exports.deleteCategory = handleFactory.deleteOne(categoryModel)
+exports.activeCategory = handleFactory.ActiveOne(categoryModel)
+exports.getAllCategory= handleFactory.getAll(categoryModel)
+exports.deleteAllCategory = handleFactory.deleteAll(categoryModel)

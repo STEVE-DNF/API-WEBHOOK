@@ -1,0 +1,70 @@
+[{
+    "_id": {
+      "$oid": "65cff6c1e43c2a21d4864d2b"
+    },
+    "numDay": 0,
+    "day": {
+      "en": "Sunday",
+      "es": "Domingo"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "65cff6f4e43c2a21d4864d2c"
+    },
+    "numDay": 1,
+    "day": {
+      "en": "Monday",
+      "es": "Lunes"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "65cff6fde43c2a21d4864d2d"
+    },
+    "numDay": 2,
+    "day": {
+      "en": "Tuesday",
+      "es": "Martes"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "65cff709e43c2a21d4864d2e"
+    },
+    "numDay": 3,
+    "day": {
+      "en": "Wednesday",
+      "es": "Miércoles"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "65cff70ee43c2a21d4864d2f"
+    },
+    "numDay": 4,
+    "day": {
+      "en": "Thursday",
+      "es": "Jueves"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "65cff716e43c2a21d4864d30"
+    },
+    "numDay": 5,
+    "day": {
+      "en": "Friday",
+      "es": "Viernes"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "65cff71ee43c2a21d4864d31"
+    },
+    "numDay": 6,
+    "day": {
+      "en": "Saturday",
+      "es": "Sábado"
+    }
+  }]

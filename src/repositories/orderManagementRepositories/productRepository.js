@@ -1,0 +1,11 @@
+const {orderManagementModels:{productModel}} = require('../../models')
+const handleFactory = require('../handleFactory')
+
+exports.createProduct= handleFactory.createOne(productModel)
+exports.updateProduct= handleFactory.updateOne(productModel)
+exports.getProduct = handleFactory.getOne(productModel)
+exports.deleteProduct = handleFactory.deleteOne(productModel)
+exports.getAllProduct= handleFactory.getAll(productModel)
+exports.deleteProduct= handleFactory.deleteOne(productModel)
+exports.activeProduct = handleFactory.ActiveOne(productModel)
+exports.deleteAllProduct = handleFactory.deleteAll(productModel)

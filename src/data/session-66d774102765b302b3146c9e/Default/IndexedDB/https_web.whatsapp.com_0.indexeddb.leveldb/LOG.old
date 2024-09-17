@@ -1,0 +1,21 @@
+2024/09/09-07:18:48.107 732c Reusing MANIFEST C:\Users\fortn\Videos\API_WH\src\data\session-66d774102765b302b3146c9e\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2024/09/09-07:18:48.108 732c Recovering log #951
+2024/09/09-07:18:48.174 732c Reusing old log C:\Users\fortn\Videos\API_WH\src\data\session-66d774102765b302b3146c9e\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000951.log 
+2024/09/09-07:18:49.615 2780 Level-0 table #960: started
+2024/09/09-07:18:49.633 2780 Level-0 table #960: 498719 bytes OK
+2024/09/09-07:18:49.634 2780 Delete type=0 #951
+2024/09/09-07:18:49.635 2780 Manual compaction at level-0 from ' d\x01\x00\x00\x00' @ 72057594037927935 : 1 .. ' e\x01\x00\x00\x00' @ 0 : 0; will stop at (end)
+2024/09/09-07:18:51.334 2780 Compacting 1@1 + 5@2 files
+2024/09/09-07:18:51.461 2780 Generated table #961@1: 85156 keys, 2234295 bytes
+2024/09/09-07:18:51.578 2780 Generated table #962@1: 98022 keys, 2250764 bytes
+2024/09/09-07:18:51.693 2780 Generated table #963@1: 77363 keys, 2269112 bytes
+2024/09/09-07:18:51.781 2780 Generated table #964@1: 32323 keys, 2190048 bytes
+2024/09/09-07:18:51.817 2780 Generated table #965@1: 27752 keys, 542785 bytes
+2024/09/09-07:18:51.817 2780 Compacted 1@1 + 5@2 files => 9487004 bytes
+2024/09/09-07:18:51.818 2780 compacted to: files[ 0 0 5 0 0 0 0 ]
+2024/09/09-07:18:51.818 2780 Delete type=2 #953
+2024/09/09-07:18:51.818 2780 Delete type=2 #954
+2024/09/09-07:18:51.818 2780 Delete type=2 #955
+2024/09/09-07:18:51.818 2780 Delete type=2 #956
+2024/09/09-07:18:51.818 2780 Delete type=2 #957
+2024/09/09-07:18:51.818 2780 Delete type=2 #960
