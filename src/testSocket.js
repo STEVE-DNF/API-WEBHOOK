@@ -4,7 +4,7 @@ const qrcode = require('qrcode-terminal');
 
 const serverUrl = "http://localhost:3000"; 
 
-token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZWVmYzRlMDYzZWY3YzRiNDY3ZTNlOCIsImlhdCI6MTcyNjAxOTEyMiwiZXhwIjoxNzMzNzk1MTIyfQ.XewL829SUF4QhD4-tAnwBnPZ17IbdpGhnOTkVhiweBA"
+token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZWVmYzRlMDYzZWY3YzRiNDY3ZTNlOCIsImlhdCI6MTcyNjkyNjUwNiwiZXhwIjoxNzM0NzAyNTA2fQ.VRv9MY5dLeJO0GEj8zHaqM_TtdpdyKLVQQOZltsSLnA"
 
 const socket = io(serverUrl,{ query: { token } });
 

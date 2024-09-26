@@ -4,7 +4,7 @@ const orderService = require('./orderService')
 const AppError = require('../utils/appError')
 const getDayOfWeek = require('../utils/getDayOfWeek')
 const checkTimeValidity = require('../utils/checkTimeValidity')
-
+const createResponse = require('./../utils/createResponse')
 exports.checkScheduleState = async (restaurant,ready,active,lngOption) => {
     const dayOfWeek = getDayOfWeek();
     const timetable = await scheduleService.getScheduleService(restaurant, dayOfWeek);

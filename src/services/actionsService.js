@@ -7,7 +7,7 @@ const supportService = require('./supportService')
 const categoryService = require('./categoryService')
 const orderService = require('./orderService')
 const apiService = require('./apiService')
-
+const appError= require('../utils/appError')
 
 const handleHelp = async(restaurant,customer) => {
 
@@ -571,12 +571,11 @@ exports.handleIntentAction = async (classify, restaurant_id, customer_id,order,l
     const { intent, entities } = classify;
     
     const actionHandler = actionHandlers[intent];
-    console.log("intent",intent)
     let response = 'DEFAULT'
-
     if (!actionHandler) {
         response = 'ERROR_DEFAULT_V1'
     }
+    console.log(customer_id)
     if (order) {   
         if(!order?.address && 'address_selection' === order.status){
             response = await handleAddressCreate(restaurant_id,customer_id,order._id,location);

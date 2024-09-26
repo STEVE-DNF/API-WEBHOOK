@@ -1,0 +1,13 @@
+2024/09/21-09:26:15.481 7ae4 Reusing MANIFEST C:\Users\fortn\OneDrive\Documentos\GitHub\API-WEBHOOK\src\data\session-66eecf774123f753f94cb848\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2024/09/21-09:26:15.482 7ae4 Recovering log #59
+2024/09/21-09:26:15.585 7ae4 Reusing old log C:\Users\fortn\OneDrive\Documentos\GitHub\API-WEBHOOK\src\data\session-66eecf774123f753f94cb848\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000059.log 
+2024/09/21-09:26:17.003 3720 Level-0 table #64: started
+2024/09/21-09:26:17.024 3720 Level-0 table #64: 479345 bytes OK
+2024/09/21-09:26:17.025 3720 Delete type=0 #59
+2024/09/21-09:26:17.025 3720 Manual compaction at level-0 from '\x00%\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00&\x00\x00\x00' @ 0 : 0; will stop at (end)
+2024/09/21-09:26:18.768 94dc Compacting 1@1 + 1@2 files
+2024/09/21-09:26:18.829 94dc Generated table #65@1: 31499 keys, 1101729 bytes
+2024/09/21-09:26:18.829 94dc Compacted 1@1 + 1@2 files => 1101729 bytes
+2024/09/21-09:26:18.830 94dc compacted to: files[ 0 0 1 0 0 0 0 ]
+2024/09/21-09:26:18.830 94dc Delete type=2 #61
+2024/09/21-09:26:18.830 94dc Delete type=2 #64

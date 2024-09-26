@@ -1,0 +1,4 @@
+2024/09/21-09:27:51.510 3840 Reusing MANIFEST C:\Users\fortn\OneDrive\Documentos\GitHub\API-WEBHOOK\src\data\session-66eecf774123f753f94cb848\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2024/09/21-09:27:51.511 3840 Recovering log #63
+2024/09/21-09:27:51.531 3840 Reusing old log C:\Users\fortn\OneDrive\Documentos\GitHub\API-WEBHOOK\src\data\session-66eecf774123f753f94cb848\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000063.log 
+2024/09/21-09:27:52.956 3840 Manual compaction at level-0 from '\x00&\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00'\x00\x00\x00' @ 0 : 0; will stop at (end)

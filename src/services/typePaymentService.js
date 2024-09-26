@@ -1,5 +1,5 @@
 const typePaymentRepository = require('../repositories/orderManagementRepositories/typePaymentRepository')
-
+const createResponse = require('./../utils/createResponse')
 
 exports.createTypePaymentService=async(methodEs,methodEn)=>{
     const typePayment = await typePaymentRepository.createTypePayment({method:{es:methodEs,en:methodEn}})

@@ -45,6 +45,8 @@ exports.clientAuth= async (socket) => {
         socket.disconnect()
     }
     
+    console.log(currentUser)
+
     const system = await systemService.getSystemService(currentUser.user.system)
 
     if(!system.active){
