@@ -5,8 +5,6 @@ module.exports = (fn) => {
     return async (client, message, options) => {
         try {
             const result = await fn(client, message, options);
-            console.log('result', result.res);
-
             if (typeof result.res === 'string') {
                 await client.sendMessage(options.from, translatorNextIO(result.res, undefined, result.lng));
             } else {

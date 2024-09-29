@@ -1,4 +1,4 @@
-const whatsappService = require('./whatsappService')
+const customerService = require('./customerService')
 const restaurantService = require('./restaurantService')
 const paymentService = require('./paymentService')
 const addressService = require('./addressService')
@@ -8,14 +8,15 @@ const categoryService = require('./categoryService')
 const orderService = require('./orderService')
 const apiService = require('./apiService')
 const appError= require('../utils/appError')
+const translatorNextIO= require('../utils/translatorNextIO')
 
 const handleHelp = async(restaurant,customer) => {
 
     const support = await supportService.createSupportService(restaurant,customer,'Generate - Chatbot')
     
-    if(!support.success) return 'CREATE_NOT_SUPPORT'
+    if(!support.success) return support.code
 
-    return 'CREATE_SUPPORT'
+    return support.code
 };
 
 const filterEntities = (entities, entity) => {
@@ -32,18 +33,16 @@ const filterEntities = (entities, entity) => {
     });
 };
 
-
 const handleMeAddressList = async (customer) => {
-    const address = await addressService.getAllAddressService(customer)
-    if(!address.success) return 'ADDRESS_NOT_ME'
-    return [{code:'ADDRESS_ME',type:'list',listResponse:address.data ,style: 'address'}]
+    const address = await addressService.getAddressService(customer)
+    if(!address.success) return address.code
+    return [{code:'ADDRESS_ME',type:'string',placeholder:address.data.reference}]
 };
 
 const handleRestaurantAddress = async (restaurant) => {
     const address = await restaurantService.getAddressService(restaurant)
-    if(address.data.length <= 0) return 'ADDRESS_NOT_RESTAURANT'
-
-    return [{code:'ADDRESS_RESTAURANT',placeholder:address.data.name,type:'string'}]
+    if(!address.success) return address.code
+    return [{code:address.code,placeholder:address.data.name,type:'string'}]
 };
 
 const handlePaymentConsult = async(restaurant_id) => {
@@ -52,7 +51,7 @@ const handlePaymentConsult = async(restaurant_id) => {
     const payments = await paymentService.getAllPaymentService(restaurant_id,{fields:'typepayment',active:{
         ne:false
     }})
-    if(!payments.data) return 'PAYMENT_NOT_LIST'
+    if(!payments.success) return payments.code
 
     return [{code:'PAYMENT_LIST',type:'string'},{listResponse:payments.data,style:'payment',type:'list'}]
 };
@@ -78,9 +77,9 @@ const handlePaymentTypeMethod = async(restaurant_id,recognizedEntity) => {
 
 
 const handleMenu = async (restaurant_id) => {
-    const menus = await restaurantService.getAllMenuRestaurantService(restaurant_id)
-    if(menus.data.length <= 0) return 'MENU_NOT_BIGLATTER'
-    return [{code:'MENU_BIGLATTER',type:'string'},{listResponse:menus,style:'menu',type:'list'}]
+    const menu = await restaurantService.getAllMenuRestaurantService(restaurant_id)
+    if(!menu.success) return menu.code
+    return [{code:menu.code,type:'string'},{listResponse:menu.data,style:'menu',type:'list'}]
 };
 
 
@@ -114,16 +113,15 @@ const handleOrderCreate = async (restaurant_id,customer_id,products) => {
         if(product?.type === 'string') return product
         const existProduct = await orderService.createProductOrderService(order.data._id,restaurant_id,product,true)
         if(!existProduct.success) throw new appError(translatorNextIO(existProduct.code), 400)
-        return existProduct;
+        return existProduct.data;
     });
     const orderedPromise  = await Promise.all(promises);
-    const orderredProducts = orderedPromise[0].products
+    const flattenedOrders = orderedPromise.flat();
 
-    let responseListOrder ={listResponse:orderredProducts,style:'order',code:'PRODUCT_ADD_ORDER_INFO',type:'list'} 
-
-    if((orderredProducts).length < 0) return 'ORDER_START'
+    let responseListOrder ={listResponse:flattenedOrders,style:'order',code:'PRODUCT_ADD_ORDER_INFO',type:'list'} 
+    if((flattenedOrders).length < 0) return 'ORDER_START'
     else{
-        for(let product of orderredProducts){
+        for(let product of flattenedOrders){
             if(typeof product ==='string') return [responseListOrder]
         }
     }
@@ -134,10 +132,13 @@ const handleproductConsultation = async(restaurant_id,filter)=>{
 
     const results = await productService.checkProductAvailability(restaurant_id,filter)
 
-    if(results.data[0]){
-        return [{code:'PRODUCT_CONSULT',type:'string',style:'order',placeholder : results.data[0].name}]
-    }
-    return [{code:'PRODUCT_CONSULT_ERROR',type:'string',style:'order',placeholder : results.data[0].name}]
+    const response = results.data.map(value => ({
+        code: value.code === 'ERROR_PRODUCT_INACTIVE' ? 'ERROR_PRODUCT_INACTIVE' : 'PRODUCT_CONSULT',
+        type: 'string',
+        style: 'order',
+        placeholder: value.placeholder
+    }));
+    return response
 }
 
 const handleSupportCreateSupport = ()=>{
@@ -147,14 +148,44 @@ const handleSupportCancelSupport = ()=>{
     //Implementar
 }
 
-const handleCancelation = async(order_id) => {
+const handleUpdateOrAppendMeAddress =async(customer_id)=>{
+    const address = await addressService.getMainAddressService(customer_id)
+    if(!address.success) {
+        const customer=await customerService.setAddressAddContext(customer_id)
+        //Agregar informacion al usuario en caso de que no funcione
+        return [{code:'ADDRESS_ADD_ME',type:'string'}]
+    }
+    const customer=await customerService.setAddressUpdateContext(customer_id)
+    return [{code:'ADDRESS_EXIST_UPDATE',type:'string',placeholder:address.data.reference},{code:'ADDRESS_UPDATE',type:'string'}]
+}
+
+
+const handleMainAddressToOrder = async (customer_id, order_id) => {
+    const address = await addressService.getMainAddressService(customer_id);
+    if (!address.success) throw new appError(translatorNextIO(address.code), 400)
+
+    const result = await orderService.createAddressOrderService(order_id, address.data._id);
+    if (!result.success) throw new appError(translatorNextIO(address.code), 400)
+
+    return [{ code: result.code, type: 'string' }];
+};
+
+const handleCancelation = async(customer_id,order_id) => {
+
+    const customer=await customerService.setNormalUpdateContext(customer_id);
+    if(!customer.success) return customer.code
+
     const response = await orderService.changeCanceledReasonSelectionStatus(order_id)
     if(!response.success) throw new appError(translatorNextIO(response.code), 400)
+
     return response.code
 }
 
-const handleCancelationOther = async(restaurant,customer,order,descripcion="Ejemplo de problema") => {
-    const response =  await orderService.changeCanceledSupportAssistanceStatus(order,restaurant,customer,descripcion)
+const handleCancelationOther = async(restaurant,customer_id,order_id,descripcion="Ejemplo de problema") => {
+    const customer=await customerService.setNormalUpdateContext(customer_id);
+    if(!customer.success) return customer.code
+
+    const response =  await orderService.changeCanceledSupportAssistanceStatus(order_id,restaurant,customer_id,descripcion)
     if(!response.success) throw new appError(translatorNextIO(response.code), 400)
     return response.code
 }
@@ -214,27 +245,44 @@ const handleOrderUpdateProducts=async(restaurant_id,order_id,products,increaseQu
 
     const results = await productService.checkProductAvailability(restaurant_id,products)
 
-    if (results.data.some(value => value.code === 'ERROR_PRODUCT_INACTIVE')) {
-        throw new appError(translatorNextIO('ERROR_PRODUCT_INACTIVE'), 400);
-    }
+    const responseCheckProduct=results.data.map((value)=>{
+
+        if (typeof value !=='string') return null
+        return {
+            code: value,
+            type:'string'
+        }
+    }).filter(Boolean)
+
+    if(responseCheckProduct.length > 0) return responseCheckProduct
+
     const promises = results.data.map(async (product) => {
-        if(!product.success) return product
+
         const existProduct = await orderService.createProductOrderService(order_id,restaurant_id,product,increaseQuantity)
-        if(!existProduct.success) throw new appError(translatorNextIO(existProduct.code), 400)
+        if(!existProduct.success) return existProduct.code
         return existProduct.data;
     });
 
     const orderedProducts  = await Promise.all(promises);
+    const flattenedProducts = orderedProducts.flat();
 
-    if(typeof orderedProducts === 'string') return 'ERROR_PRODUCT_ADD_ORDER_INFO'
-    else if (orderedProducts[0].products.length === 0){
-        return 'PRODUCT_REMOVE_ORDER_INFO'
+    if(typeof flattenedProducts === 'string') return 'ERROR_PRODUCT_ADD_ORDER_INFO'
+    
+    else if (Array.isArray(flattenedProducts) && flattenedProducts.length === 0) {
+        return 'PRODUCT_REMOVE_ORDER_INFO';
     }
-    else{
-        for(let product of orderedProducts[0].products){
-            if(typeof product ==='string') return [responseListOrder]
+
+    const responseOrdered=flattenedProducts.map((value)=>{
+
+        if (typeof value !=='string') return null
+        return {
+            code: value,
+            type:'string'
         }
-    }
+    }).filter(Boolean)
+
+
+    if(responseOrdered.length > 0) return responseOrdered
 
 
     const normalizeString = (str) => {
@@ -244,26 +292,34 @@ const handleOrderUpdateProducts=async(restaurant_id,order_id,products,increaseQu
             .toLowerCase()
             .replace(/\s+/g, ' ');
     };
-    
-    const promisesInforProducts = (orderedProducts[0].products).map(async (valueProductOrder) => {
+
+    const promisesInforProducts = flattenedProducts.map(async (valueProductOrder) => {
         const existsOrderUpdate = products.some((productFilter) => {
             const valueOrderNormalized = normalizeString(valueProductOrder.name);
             const productFilterNormalized = normalizeString(productFilter.value);
+
             return valueOrderNormalized === productFilterNormalized;
         });
         if (existsOrderUpdate) {
+            const responseProduct = await productService.getProductService(valueProductOrder.product, "name")
+            if(!responseProduct.success) return responseProduct.code
 
-            responseProduct = await productService.getProductService(valueProductOrder.product, "name")
-
-            if(!responseProduct.success) return null
-
-            return {quantity:valueProductOrder.quantity,name:valueProductOrder.name,total:valueProductOrder.total,...responseProduct};
+            return {quantity:valueProductOrder.quantity,name:valueProductOrder.name,total:valueProductOrder.total,...responseProduct.data};
         }
         return null;
     });
     
     const filteredProducts = await Promise.all(promisesInforProducts);
     const validProducts = filteredProducts.filter(product => product !== null);
+    const responseValidProducts=validProducts.map((value)=>{
+        if (typeof value !=='string') return null
+        return {
+            code: value,
+            type:'string'
+        }
+    }).filter(Boolean)
+
+    if(responseValidProducts.length > 0) return responseValidProducts
 
     return [{listResponse:validProducts,style:'order',code:increaseQuantity ? 'PRODUCT_ADD_ORDER_INFO':'PRODUCT_UPDATE_ORDER_INFO',type:'list'}]
 }
@@ -287,7 +343,10 @@ const handleAddressConfirmationSelection = async(order_id) => {
     return response.code
 }
 
-const handleOrderConfirmationSelection = async(order_id) => {
+const handleOrderConfirmationSelection = async(customer_id,order_id) => {
+
+    const customer=await customerService.setNormalUpdateContext(customer_id)
+    if(!customer.success) throw new appError(translatorNextIO(customer.code), 400)
     const response =  await orderService.changeOrderConfirmationStatus(order_id)
     if(!response.success) throw new appError(translatorNextIO(response.code), 400)
     return response.code
@@ -300,31 +359,59 @@ const handleGetOrderSelection = async(order_id) => {
 }
 
 
-const handleAddressCreate = async(restaurant_id,customer_id,order_id,location) => {
+const handleAddress = async (restaurant_id, customer_id, location, isUpdate = false,isOrder = false) => {
+    if (!location) return 'NOT_ADDRESS_LOCATION';
 
-    if(!location) return 'NOT_ADDRESS_LOCATION'
+    const { lat, lng } = location;
 
-    const {lat,lng} = location
+    let responseAddress;
+    if (isUpdate) {
+        responseAddress = await addressService.updateAddressService(restaurant_id,customer_id, [lat, lng]);
+    } else {
+        responseAddress = await addressService.createTempAddressService(restaurant_id, customer_id, [lat, lng]);
+    }
 
-    const addressInfo=await apiService.getStreetMap(lat,lng)
-    
-    if(!addressInfo.success) throw new appError(translatorNextIO(addressInfo.code), 400)
+    if (!responseAddress.success){
+        let customer;
+        if (isOrder) {
+            if(isUpdate) customer = await customerService.setAddressUpdateContext(customer_id);
+            else customer = await customerService.setAddressAddContext(customer_id);
+        } else {
+            customer = await customerService.setNormalUpdateContext(customer_id);
+        }
+        if (!customer.success) return customer.code;
+        
+        return [{ code: responseAddress.code, placeholder:responseAddress.placeholder,type: 'string' }];
+    }
+    return [{ code: responseAddress.code, placeholder:responseAddress.placeholder,type: 'string' },{code:"ADDRESS_CONTEXT_CONFIRM",type: 'string'}];
+};
 
-    const responseAddress= await addressService.createAddressService(restaurant_id,customer_id,addressInfo.data.display_name,[lat,lng])
+const handleAddressCreate = async (restaurant_id, customer_id, location,isOrder = false) => {
+    return await handleAddress(restaurant_id, customer_id, location, false,isOrder);
+};
 
-    if(!responseAddress.success) throw new appError(translatorNextIO(responseAddress.code), 400)
-    
-    const responseOrder = await orderService.createAddressOrderService(order_id,responseAddress.data._id)
+const handleAddressUpdate = async (restaurant_id, customer_id, location,isOrder = false) => {
+    return await handleAddress(restaurant_id, customer_id, location, true,isOrder);
+};
 
-    if(!responseOrder.success) throw new appError(translatorNextIO(responseOrder.code), 400)
+const handleAddressTempUpdate = async (restaurant_id, customer_id,isConfirm) => {
+    let addressTemp
+    if(isConfirm){
+        addressTemp = await addressService.updateAddressTempConfirmService(restaurant_id,customer_id)
+    }
+    else{
+        addressTemp = await addressService.updateAddressTempCancelService(restaurant_id,customer_id)
+    }
 
-    return [{code:responseOrder.code,type:'string'},{code:'ADDRESS_SELECTION_CONFIRM',type:'string'}]
-}
+    const customer = await customerService.setNormalUpdateContext(customer_id);
+    if (!customer.success) return customer.code;
+
+    return [{ code: addressTemp.code, type: 'string', placeholder:addressTemp.placeholder}]
+};
+
 
 const handleAddressConfirmation =async(order_id)=>{
     const responseAddressConfirmation= await handleAddressConfirmationSelection(order_id)
-    
-    if(!responseAddressConfirmation.success) throw new appError(translatorNextIO(responseAddressConfirmation.code), 400)
     const responseOrderDetails = await handleGetOrderSelection(order_id)
     return [...responseOrderDetails,{code:responseAddressConfirmation,type:'string'}]
 }
@@ -351,14 +438,15 @@ const actionHandlers = {
     'greeting_greet': ()=>handleWelcomeOrFarewell(true),
     'greeting_farewell': ()=>handleWelcomeOrFarewell(false),
     'menu_general': async(restaurant_id)=>await handleMenu(restaurant_id),
-    'order_confirmations_confirm_order': async(restaurant_id,customer_id,_,order_id) => await handleOrderConfirmationSelection(order_id),
+    'order_confirmations_confirm_order': async(restaurant_id,customer_id,_,order_id) => await handleOrderConfirmationSelection(customer_id,order_id),
     'order_confirmations_confirm_products': async(restaurant_id,customer_id,_,order_id) => await handleProductConfirmationSelection(order_id),
     'order_confirmations_confirm_payment': async(restaurant_id,customer_id,_,order_id) => {
-        response = await handlePaymentConfirmationSelection(order_id)
+        const response = await handlePaymentConfirmationSelection(order_id)
+
         return [{code:response,type:'string'},{code:'ADDRESS_SELECTION',type:'string'}]
     },
     'order_confirmations_confirm_address': async(restaurant_id,customer_id,_,order_id) => await handleAddressConfirmation(order_id),
-    'order_cancelations_cancel_order': async(restaurant_id,customer_id,_,order_id) => await handleCancelation(order_id),
+    'order_cancelations_cancel_order': async(restaurant_id,customer_id,_,order_id) => await handleCancelation(customer_id,order_id),
     'order_cancelations_cancel_order_with_support': async(restaurant_id,customer_id,_,order_id) => await handleCancelationOther(restaurant_id,customer_id,order_id),
     'order_requests_create_order': async(restaurant_id,customer_id,entities)=>{
 
@@ -388,8 +476,6 @@ const actionHandlers = {
         
         const formatEntities=combineQuantityAndProduct(entities,categories)
 
-        console.log('formatEntities',formatEntities)
-
         const filter = filterEntities(formatEntities,categories)
 
         let response = ''
@@ -400,7 +486,6 @@ const actionHandlers = {
         else{
             response = await handleOrderCreate(restaurant_id,customer_id,filter)
         }
-
         return responseMessageList(response)
 
     },
@@ -441,7 +526,7 @@ const actionHandlers = {
         return responseMessageList(response)
     },
     'order_payments_consult_payment': (restaurant_id)=>handlePaymentConsult(restaurant_id),
-    'order_payments_consult_payment_name': async(restaurant_id,_,entities,order_id)=>{
+    'order_payments_consult_payment_name': async(restaurant_id,customer_id,entities,order_id)=>{
 
         entities = filterEntities(entities, 'payment');
   
@@ -455,16 +540,25 @@ const actionHandlers = {
             const responseAddPayment = await orderService.createPaymentOrderService(order_id, payment._id);
 
             if (!responseAddPayment.success) {
-                throw new appError(translatorNextIO(responseAddPayment.code), 400);
+                return responseAddPayment.code
             }
 
             response.push({ code: responseAddPayment.code, type: 'string' });
 
             const responseAddressSelection = await orderService.changeAddressSelectionStatus(order_id);
             if (!responseAddressSelection.success) {
-                throw new appError(translatorNextIO(responseAddressSelection.code), 400);
+                return responseAddressSelection.code
             }
+
+            const address = await addressService.getAddressService(customer_id)
+
+            if(address.success){
+                return [...response,{code:'ADDRESS_ORDER_EXIST',type:'string',placeholder:address.data.reference}]
+            }
+
             response.push({ code: responseAddressSelection.code, type: 'string' });
+
+            const customer = await customerService.setAddressAddContext(customer_id);
 
             return response;
         }
@@ -475,8 +569,8 @@ const actionHandlers = {
         response = await handleMeAddressList(customer_id)
         return response
     },
-    'address_update': (restaurant_id)=>handleMenu(restaurant_id),//handleAddressUpdate,// FALTA
-    'address_create': (restaurant_id)=>handleMenu(restaurant_id),//handleAddressCreate,// FALTA
+    'address_update': async(_,customer_id)=>await handleUpdateOrAppendMeAddress(customer_id),//handleAddressUpdate,// FALTA
+    'address_create': async(_,customer_id)=>await handleUpdateOrAppendMeAddress(customer_id),
     'address_delete': (restaurant_id)=>handleMenu(restaurant_id),//handleAddressDelete,// FALTA
     'address_deleteAll': (restaurant_id)=>handleMenu(restaurant_id),//handleAddressDeleteAll,// FALTA
     'product_consultation': async(restaurant_id,_,entities)=>{
@@ -533,6 +627,16 @@ const allowedIntentsByOrderStatus = {
     ],
     address_selection: [
         'address_consult',
+        'address_update',
+        'address_create',
+        'order_cancelations_cancel_order',
+        'order_cancelations_cancel_order_with_support',
+
+    ],
+    address_confirmation: [
+        'address_consult',
+        'address_update',
+        'address_create',
         'order_confirmations_confirm_address',
         'order_cancelations_cancel_order',
         'order_cancelations_cancel_order_with_support',
@@ -566,36 +670,98 @@ const allowedIntentsByOrderStatus = {
     ]
 };
 
-exports.handleIntentAction = async (classify, restaurant_id, customer_id,order,location) => {
 
-    const { intent, entities } = classify;
-    
-    const actionHandler = actionHandlers[intent];
-    let response = 'DEFAULT'
-    if (!actionHandler) {
-        response = 'ERROR_DEFAULT_V1'
-    }
-    console.log(customer_id)
-    if (order) {   
-        if(!order?.address && 'address_selection' === order.status){
-            response = await handleAddressCreate(restaurant_id,customer_id,order._id,location);
-        }
-        else if (allowedIntentsByOrderStatus[order.status].includes(intent)){
-            response = await actionHandler(restaurant_id,customer_id,entities,order._id);
-        }
-        else{
-            const messageRespons = {
-                product_selection:"ERROR_PRODUCT_SELECTION_DEFAULT",
-                payment_method_selection:"ERROR_PAYMENT_METHOD_SELECTION_DEFAULT",
-                address_selection:"ERROR_ADDRESS_SELECTION_DEFAULT",
-                order_confirmation_selection:"ERROR_ORDER_CONFIRMATION_SELECTION_DEFAULT"
-            }
-            response = messageRespons[order.status]
-        }
-    }
-    if (!order && restrictedIntentsWithOrder.includes(intent)) {
-        response = await actionHandler(restaurant_id,customer_id,entities);
+async function handleOrderRelatedIntent(intent, entities, restaurant_id, customer, order) {
+
+
+    console.log('order',order)
+    console.log('allowedIntentsByOrderStatus',allowedIntentsByOrderStatus[order.status])
+    console.log('intent',intent)
+    if (allowedIntentsByOrderStatus[order.status].includes(intent)) {
+        const response = await actionHandlers[intent](restaurant_id, customer._id, entities, order._id);
+        return { res: response, lng: 'es' };
     }
     
-    return  {res:response,lng:'es'}
+    const isOrder = order?.status === 'address_selection';
+
+    if(isOrder){
+        switch(intent) {
+            case "confirm_all":
+                const respAddress = await handleMainAddressToOrder(customer._id,order._id)
+
+                console.log("respAddress",respAddress)
+                resp=await handleAddressConfirmation(order._id)
+                return { res: [...resp,respAddress], lng: 'es' };
+
+            case "cancel_all":
+                const orderResponse = await customerService.setAddressAddContext(customer._id);
+                if(!orderResponse.success) return { res: { code: orderResponse.code, type: 'string'}, lng: 'es' };
+                return { res: [{ code: 'ADDRESS_SELECTION_CANCEL', type: 'string'}], lng: 'es' };
+        }
+    }
+    const errorMessages = {
+        product_selection: "ERROR_PRODUCT_SELECTION_DEFAULT",
+        payment_method_selection: "ERROR_PAYMENT_METHOD_SELECTION_DEFAULT",
+        address_selection: "ERROR_ADDRESS_SELECTION_DEFAULT",
+        order_confirmation_selection: "ERROR_ORDER_CONFIRMATION_SELECTION_DEFAULT"
+    };
+
+    return { res: errorMessages[order.status] || 'DEFAULT', lng: 'es' };
 }
+
+exports.handleIntentAction = async (classify, restaurant_id, customer, location) => {
+    const { intent, entities } = classify;
+
+    if (customer.context === 'order_context') {
+
+        const order = await orderService.getOrderPendingService(customer._id)
+        return await handleOrderRelatedIntent(intent, entities, restaurant_id, customer, order?.data, location);
+    }
+
+    if (customer.context === 'normal_context' && restrictedIntentsWithOrder.includes(intent)) {
+        const response = await actionHandlers[intent](restaurant_id, customer._id, entities);
+        return { res: response, lng: 'es' };
+    }
+
+    if (['address_add_context', 'address_update_context'].includes(customer.context)) {
+        const order = await orderService.getOrderPendingService(customer._id);
+        const isOrder = order?.data?.status === 'address_selection';
+        if (location) {
+            if (customer.context === 'address_add_context') {
+                const response = await handleAddressCreate(restaurant_id, customer._id, location, isOrder);
+                return { res: response, lng: 'es' };
+            } else if (customer.context === 'address_update_context') {
+                const response = await handleAddressUpdate(restaurant_id, customer._id, location, isOrder);
+                return { res: response, lng: 'es' };
+            }
+        } else {
+            let resp;
+            switch(intent) {
+                case "confirm_all":
+                    resp = await handleAddressTempUpdate(restaurant_id, customer._id, true);
+                    
+                    if (isOrder) {
+                        const orderResponse = await customerService.setOrderContext(customer._id);
+
+                        if(!orderResponse.success) return { res: { code: orderResponse.code, type: 'string'}, lng: 'es' };
+
+                        return { res: [...resp, { code: 'ADDRESS_SELECTION_CONFIRM', type: 'string'}], lng: 'es' };
+                    }
+                    return { res: resp, lng: 'es' };
+
+                case "cancel_all":
+                    resp = await handleAddressTempUpdate(restaurant_id, customer._id, false);
+
+                    if (isOrder) {
+                        return { res: { code: 'ADDRESS_SELECTION_CANCEL', type: 'string'}, lng: 'es' };
+                    }
+
+                    return { res: resp, lng: 'es' };
+            }
+        }
+    }
+    if (!actionHandlers[intent]) {
+        return { res: 'ERROR_DEFAULT_V1', lng: 'es' };
+    }
+    return { res: 'DEFAULT', lng: 'es' };
+};

@@ -41,7 +41,7 @@ exports.reconnectSession = catchAsync(async (req,res,next)=>{
     if(!session.success){
         return next(new appError(translatorNext(req,session.code), 400));
     }
-    resSend(res,{statusCode:201,status:"success",data:session.code})
+    resSend(res,{statusCode:201,status:"success",data:translatorNext(req,session.code)})
 })
 
 

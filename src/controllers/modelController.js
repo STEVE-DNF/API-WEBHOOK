@@ -59,7 +59,7 @@ exports.trainModel = catchAsync(async (req, res, next) => {
         
         if(!response.success)return next(new appError(translatorNext(req,response.code), 400));
 
-        const responseProducts=await productService.createAllProductService(restaurant_id,response.success)
+        const responseProducts=await productService.createAllProductService(restaurant_id,response.data.success)
 
         if(!responseProducts.success)return next(new appError(translatorNext(req,responseProducts.code), 400));
 

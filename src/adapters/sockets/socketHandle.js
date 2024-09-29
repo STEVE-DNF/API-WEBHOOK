@@ -42,7 +42,7 @@ class SocketInputAdapter {
     });
   }
   handleOrders(socket){
-    socket.on('orderList', async() => 
+    socket.on('orderDashboardData', async() => 
       await this.catchAsyncAdapter(orderController.getAllOrder,true,{socket})
     );
   }

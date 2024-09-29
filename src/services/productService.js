@@ -15,7 +15,11 @@ exports.createProductService = async (restaurant,category,name,description,price
 
 exports.createAllProductService = async (restaurant_id,products)=>{
 
-    const responseCategories = categoryService.createAllCategoryService(restaurant_id,products)
+    const categories =new Set(products.map((value)=>value.categorias))
+
+    const responseCategories = await categoryService.createAllCategoryService(restaurant_id,Array.from(categories))
+
+    const categoriesAll = responseCategories.data.map((value)=>value.category)
 
     if (responseCategories.length === 0){
         return createResponse({code:'ERROR_DELETE_UPDATE_CATEGORY'})
@@ -26,18 +30,14 @@ exports.createAllProductService = async (restaurant_id,products)=>{
     if (!resultProductDeleteAll.modifiedCount > 0) {
         return createResponse({code: 'NO_DOCUMENTS_DEACTIVATED'});
     }
-
     const productsPromises = products.map(async (value) => {
-        
-        const responseCategorie = await categoryService.getCategoryOneService({name:value.categorias}, "", "active");
+        const responseCategorie =categoriesAll.find((category)=>category.name === value.categorias)
 
         if (responseCategorie?.active) {
-
             const responseProduct=await productRepository.getProduct({name:value.productos},"", "active")
-
             if (responseProduct && !responseProduct?.active) {
                 const getProduct = await productRepository.activeProduct(responseProduct._id);
-                return { status: 'update', reason: 'Categoría inactiva o no encontrada', product: getProduct };
+                return { status: 'update', reason: 'Producto inactivo', product: getProduct };
             } 
             else if(!responseProduct) {
                 const newProduct = await productRepository.createProduct({
@@ -129,4 +129,8 @@ exports.deleteProductService = async (_id)=>{
     return createResponse({success:true,data:product})
 }
 
+exports.updateStockStatusProductService = async (_id, isOfStock) => {
+    const product = await productRepository.updateProduct({_id}, { isOfStock });
+    return createResponse({ success: true, data: product });
+};
 

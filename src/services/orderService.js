@@ -1,8 +1,8 @@
 
 const orderRepository = require('../repositories/orderManagementRepositories/orderRepository');
-const supportService = require('../services/supportService');
+const customerService = require('../services/customerService');
 const restaurantService = require('../services/restaurantService');
-const { ObjectId } = require('mongodb');
+
 const createResponse = require('./../utils/createResponse')
 
 const handleResponse = (order, successCode, errorCode) => {
@@ -16,6 +16,7 @@ exports.createOrderService = async (restaurant,customer)=>{
     if(!order) return createResponse({})
     return createResponse({success:true,data:order})
 }
+
 exports.getOrderService = async (_id)=>{
     let filter = {_id}
     const order=await orderRepository.getOrder(filter,[{
@@ -47,17 +48,26 @@ exports.getOrderPendingService = async (customer)=>{
 }
 
 
-exports.getAllOrderService = async (restaurant,query)=>{
-    const order=await orderRepository.getAllOrder({restaurant},query)
-    return createResponse({success:true,data:order})
+exports.fetchOrdersWithDailyStatusTrends = async (restaurantId, query) => {
+    const [orders, orderStatusTrends] = await Promise.all([
+        orderRepository.getAllOrder({ restaurant: restaurantId }, query),
+        orderRepository.getOrderStatusTrendsDaily(restaurantId)
+    ]);
+  
+    return createResponse({
+        success: true,
+        data: {
+          orders,
+          trends: orderStatusTrends
+        }
+    });
 }
 exports.createAddressOrderService = async(order_id,address_id)=>{
     const order = await orderRepository.updateOrder({_id:order_id},{address:address_id})
     return handleResponse(order, 'ADDRESS_ADD_SUCCESS', 'ERROR_ADDRESS_ADD');
-
 }
 
-exports.createPaymentOrderService = async(order_id,payment_id,money)=>{
+exports.createPaymentOrderService = async(order_id,payment_id)=>{
     const order = await orderRepository.updateOrder({_id:order_id},{paymethod:{payment:payment_id}})
     return handleResponse(order, 'PAYMENT_ADD_SUCCESS', 'ERROR_PAYMENT_ADD');
 }
@@ -68,12 +78,13 @@ exports.createProductOrderService = async (order_id, restaurant_id, productInfo,
     let productQuantityInOrder = await orderRepository.getProductQuantity(order_id, productInfo._id);
     productQuantityInOrder = (productQuantityInOrder[0]?.quantity || 0);
 
+
     if (increaseQuantity) {
         productQuantityInOrder += productInfo.quantity;
     } else {
         productQuantityInOrder -= productInfo.quantity;
     }
-    const { min: minProductCount, max: maxProductCount } = await restaurantService.getProductMinMaxService(restaurant_id);
+    const { min: minProductCount, max: maxProductCount } = (await restaurantService.getProductMinMaxService(restaurant_id)).data;
 
     let filter = { _id: order_id };
     let update = undefined;
@@ -105,11 +116,10 @@ exports.createProductOrderService = async (order_id, restaurant_id, productInfo,
         if (!(productCountInOrder >= minProductCount && productCountInOrder <= maxProductCount)) {
             return "ERROR_ORDER_MAX";
         }
-
         filter["products.product"] = productInfo._id;
-
         const result = await orderRepository.updateOrder(filter, update, undefined);
-        return result;
+
+        return createResponse({success:true,data:result.products})
     } catch (err) {
         if (productQuantityInOrder > 0) {
             update = {
@@ -126,9 +136,8 @@ exports.createProductOrderService = async (order_id, restaurant_id, productInfo,
             return createResponse({code:'ERROR_INVALID_OPERATION'})
         }
         delete filter["products.product"];
-
         const result = await orderRepository.updateOrder(filter, update, undefined);
-        return createResponse({success:true,data:result})
+        return createResponse({success:true,data:result.products})
     }
 };
 
@@ -177,6 +186,7 @@ exports.changeOrderConfirmationStatus = async (_id) => {
 
 exports.changeCanceledReasonSelectionStatus = async (_id) => {
     const status = 'canceled_reason_selection';
+
     const order = await updateOrderStatus(_id, status, true);
     return handleResponse(order, 'CANCELED_REASON_SELECTION', 'ERROR_CANCELED_REASON_SELECTION');
 };
@@ -195,8 +205,32 @@ exports.changeCanceledSupportAssistanceStatus = async (order_id,restaurant_id,cu
 }
 
 async function updateOrderStatus(_id, status, isCancelled = false) {
-    let body = { status };
+    let body = { status ,order_status:'pending'};
     if (isCancelled) body.is_cancelled=true
-    const order = await orderRepository.updateOrder({ _id }, body);
+    const order = await orderRepository.updateOrder({ _id }, body,null,{new:true});
     return order;
 }
+
+
+async function createOrderStatusService(_id, status){
+    const order_status = status;
+    const order = await orderRepository.updateOrder({_id}, {order_status},null,{new:true});
+    if (!order) return createResponse({});
+    return createResponse({success: true, data: order});
+};
+
+exports.createOrderStatusCancelledService = async (_id) => {
+    return await createOrderStatusService(_id, 'cancelled');
+};
+
+exports.createOrderStatusPendingService = async (_id) => {
+    return await createOrderStatusService(_id, 'pending');
+};
+
+exports.createOrderStatusPreparationService = async (_id) => {
+    return await createOrderStatusService(_id, 'preparation');
+};
+
+exports.createOrderStatusShippedService = async (_id) => {
+    return await createOrderStatusService(_id, 'shipped');
+};

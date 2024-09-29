@@ -32,6 +32,7 @@ const addressSchema = new Schema({
           required: true,
           validate: {
             validator: function (value) {
+              console.log('value -->',value)
               return value.length === 2;
             },
             message: 'Coordinates must have exactly two elements: [longitude, latitude]'
@@ -48,11 +49,16 @@ const addressSchema = new Schema({
         default: false,
         select: true
     },
-    isUpdating: { 
+    isTemp: { 
         type: Boolean,
         default: false, 
         select: true
-    }
+    },
+    isPending:{
+        type: Boolean,
+        default: false,
+        select: true
+    },
 },{ timestamps: true });
 
 

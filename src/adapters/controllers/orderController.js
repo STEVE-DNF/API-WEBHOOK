@@ -10,10 +10,12 @@ exports.getAllOrder = async (socket)=>{
     if(requireField(socket.restaurant)){
         return 'MISSING_REQUIRED_FIELDS'
     } 
-
-    const response=await orderService.getAllOrderService(socket.restaurant)
+    const response=await orderService.fetchOrdersWithDailyStatusTrends(socket.restaurant,{
+        sort: 'order_counter',
+        limit: '5'
+    })
     
-    socket.emit('orderList',{status:"success",data:response.data})
+    socket.emit('orderDashboardData',{status:"success",data:response.data})
 }
 
 

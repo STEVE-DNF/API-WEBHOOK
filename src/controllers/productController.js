@@ -59,22 +59,22 @@ exports.getAllProduct = catchAsync(async (req,res,next)=>{
     resSend(res,{statusCode:201,status:"success",data:response.data})
 })
 
-exports.activeProduct = catchAsync(async (req,res,next)=>{
+exports.activeOfStockProduct = catchAsync(async (req,res,next)=>{
     const id = req.params.id
 
     if(requireField(id)){
         return next(new appError(translatorNext(req,'MISSING_REQUIRED_FIELDS'),400))
     } 
-    const response=await productService.activeProductService(id)
+    const response=await productService.updateStockStatusProductService(id,true)
     resSend(res,{statusCode:201,status:"success",data:response.data})
 })
 
-exports.deleteProduct = catchAsync(async (req,res,next)=>{
+exports.desactivateOfStockProduct = catchAsync(async (req,res,next)=>{
     const id = req.params.id
 
     if(requireField(id)){
         return next(new appError(translatorNext(req,'MISSING_REQUIRED_FIELDS'),400))
     } 
-    const response=await productService.deleteProductService(id)
+    const response=await productService.updateStockStatusProductService(id,false)
     resSend(res,{statusCode:201,status:"success",data:response.data})
 })

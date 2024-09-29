@@ -5,6 +5,7 @@ const AppError = require('../utils/appError')
 const getDayOfWeek = require('../utils/getDayOfWeek')
 const checkTimeValidity = require('../utils/checkTimeValidity')
 const createResponse = require('./../utils/createResponse')
+
 exports.checkScheduleState = async (restaurant,ready,active,lngOption) => {
     const dayOfWeek = getDayOfWeek();
     const timetable = await scheduleService.getScheduleService(restaurant, dayOfWeek);
@@ -23,13 +24,13 @@ exports.createCustomer = async (restaurant,code,phone,lngOption) => {
   
   const customer = await customerService.createOrUpdateCustomerService(restaurant,code,phone)
   if (!customer) throw new AppError('ERROR_CREATE_CUSTOMER',400)
-  return createResponse({success:true,data:customer})
+  return createResponse({success:true,data:customer.data})
 }
 
 exports.existOrder = async (customer,lngOption) => {
   
   const order = await orderService.getOrderPendingService(customer)
-  return createResponse({success:true,data:order})
+  return createResponse({success:true,data:order.data})
 }
 
 exports.createOrder = async(restaurant,customer)=>{

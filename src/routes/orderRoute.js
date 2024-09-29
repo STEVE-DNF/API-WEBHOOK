@@ -7,10 +7,10 @@ router.use(authMiddleware)
 
 router.route("/")
 .get(orderController.getAllOrder)
-.post(orderController.test)
 
 router.route("/:id")
 .get(orderController.getOrder)
+.patch(orderController.updateOrderStatus)
 
 
 module.exports = router

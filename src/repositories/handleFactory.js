@@ -2,8 +2,8 @@ const APIFeatures = require('./../utils/apiFeatures')
 
 const optionsUpdate = {
     new: true, 
-    upsert: true, 
-    runValidators: true
+    upsert: true
+    //runValidators: true
 }
 
 exports.filterObject = (body,filterFields)=>{
@@ -41,14 +41,24 @@ exports.createOne=(model)=>(body,optionsValidator)=>{
     return objectValue.save(bodyFilter,optionsValidator)
     
 }
-exports.updateOne=(model)=>async (filter,body,selectOptions,optionsValidator)=>{
+exports.updateOne = (model) => async (filter, body, selectOptions, optionsValidator, defaultValidator) => {
+  
+    let validator = optionsUpdate;
+  
+    if (optionsValidator) {
+        validator = optionsValidator;
+    } 
+    else if (defaultValidator) {
+        validator = defaultValidator;
+    }
 
-    let validator = { new: true}
+    return model.findOneAndUpdate(filter, body, validator, { new: true }).select(selectOptions);
+};
 
-    if (optionsValidator) validator = optionsValidator
+exports.findOne = (model) => async (filter,sort) => {
+    return model.findOne(filter).sort(sort);
+};
 
-    return model.findOneAndUpdate(filter,body,optionsUpdate,{ new: true}).select(selectOptions)
-}
 exports.deleteOne=(model)=>async (_id)=>{
     return model.findByIdAndUpdate(_id,{active:false},{ new: true })
 }

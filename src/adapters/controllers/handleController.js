@@ -15,7 +15,7 @@ exports.clientAuth= async (socket) => {
             status:400,
             message:translatorNextIO('ERROR_NOT_TOKEN'),
             timestamp: new Date().toISOString()
-          })
+        })
         socket.disconnect()
     }
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
@@ -44,17 +44,11 @@ exports.clientAuth= async (socket) => {
           })
         socket.disconnect()
     }
-    
-    console.log(currentUser)
-
-    const system = await systemService.getSystemService(currentUser.user.system)
-
-    if(!system.active){
+    if(!currentUser.system.active){
         socket.emit('clientError',translatorNextIO('ERROR_MAX_SESSION'))
         socket.disconnect()
     }
-
-    socket.system = currentUser.system;
+    socket.system = currentUser.system._id;
     socket.restaurant= currentUser.system.restaurant
 }
 

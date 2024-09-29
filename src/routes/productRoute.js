@@ -17,7 +17,7 @@ router.route("/:id")
 
 router.use(authRole("admin"))
 
-router.patch('/:id/active',productController.activeProduct)
-router.patch('/:id/deactivate',productController.deleteProduct)
+router.patch('/:id/active',productController.activeOfStockProduct)
+router.patch('/:id/deactivate',productController.desactivateOfStockProduct)
 
 module.exports = router

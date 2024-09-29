@@ -1,4 +1,4 @@
-
+const AppError= require('../../utils/appError')
 
 const emitError = (socket,dataError)=>{
   socket.emit("clientError",dataError)

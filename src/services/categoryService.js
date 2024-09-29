@@ -12,16 +12,16 @@ exports.createAllCategoryService = async (restaurant, categories) => {
     const resultCategoryDeleteAll=await categoryRepository.deleteAllCategory('restaurant',restaurant)
 
     const categoriesPromises = categories.map(async (value) => {
-        const responseCategory = await categoryRepository.getCategory({ name: value.categorias }, "", "active");
+        const responseCategory = await categoryRepository.getCategory({ name: value }, "", "active");
 
         if (responseCategory && !responseCategory.active) {
-            await categoryRepository.activeCategory(responseCategory._id);
-            return { status: 'activated', category: responseCategory };
+            const categorieActivate=await categoryRepository.activeCategory(responseCategory._id);
+            return { status: 'activated', category: categorieActivate };
         } 
         else if (!responseCategory) {
             const newCategory = await categoryRepository.createCategory({
                 restaurant,
-                name: value.categorias,
+                name: value,
                 description: "Descripción"
             });
             return { status: 'created', category: newCategory };

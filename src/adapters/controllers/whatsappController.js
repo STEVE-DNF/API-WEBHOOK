@@ -2,6 +2,7 @@ const whatsappService = require('../../services/whatsappService')
 const actionsService = require('../../services/actionsService')
 const apiService = require('../../services/apiService')
 const catchAsyncWhatsapp = require('../../utils/catchAsyncWhatsapp')
+const translatorNextIO = require('../../utils/translatorNextIO')
 const appError= require('../../utils/appError')
 
 const typeMessage = async(client , message)=>{
@@ -43,21 +44,17 @@ exports.receivedMessage = catchAsyncWhatsapp(async (client, message, options) =>
         formattedMessage.formattedNumber.code,
         formattedMessage.formattedNumber.phone
     );
-    console.log('customer',customer)
-    const existOrder = await whatsappService.existOrder(customer.data._id);
-    console.log('existOrder',existOrder)
+
     let responseParse = { data : {intent: [], entities: []}};
-    console.log('responseParse',responseParse)
+
     if (checkTypeMessage(formattedMessage.type)) {
         if (formattedMessage.type !== 'location') {
             responseParse = await apiService.parseMessage(restaurant_id, formattedMessage.message);
         }
-        console.log(responseParse)
         return await actionsService.handleIntentAction(
             responseParse.data,
             restaurant_id,
-            customer.data.data._id,
-            existOrder.data.data,
+            customer.data,
             formattedMessage.location
         );
     }

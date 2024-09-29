@@ -42,7 +42,7 @@ const productSchema = new Schema({
         min:[0, 'ERROR_MOONGOSE_NUMBER_MIN'],
         max:[15, 'ERROR_MOONGOSE_NUMBER_MAX']
     },
-    isOutOfStock: {
+    isOfStock: {
         type: Boolean,
         default: true, 
     },

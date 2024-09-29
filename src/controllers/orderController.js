@@ -28,12 +28,19 @@ exports.getOrder = catchAsync(async (req,res,next)=>{
     resSend(res,{statusCode:201,status:"success",data:response.data})
 })
 
-exports.test = catchAsync(async (req,res,next)=>{
-    const {order,product}=req.body
+exports.updateOrderStatus = catchAsync(async (req, res, next) => {
+    const {status } = req.body;
+    const {id} = req.params
+    
+    if (requireField(id,status)) {
+        return next(new appError(translatorNext(req, 'MISSING_REQUIRED_FIELDS'), 400));
+    }
 
-    if(requireField(order,product)){
-        return next(new appError(translatorNext(req,'MISSING_REQUIRED_FIELDS'),400))
-    } 
-    const response=await orderService.test(order,product)
-    resSend(res,{statusCode:201,status:"success",data:response.data})
-})
+    const response = await orderService.createOrderStatusService(id, status);
+
+    if (!response.success) {
+        return next(new appError(translatorNext(req, 'ORDER_NOT_FOUND'), 404));
+    }
+
+    resSend(res, { statusCode: 200, status: 'success', data: response.data });
+});

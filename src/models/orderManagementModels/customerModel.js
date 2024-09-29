@@ -32,6 +32,11 @@ const customerSchema = new Schema({
     },
     lockTimestamp: { 
         type: Date 
+    },
+    context: { 
+        type: String, 
+        enum: ['order_context','address_add_context','address_update_context','normal_context'], 
+        default: 'normal_context'
     }
 },{ timestamps: true });
 

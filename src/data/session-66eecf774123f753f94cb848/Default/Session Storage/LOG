@@ -1,3 +1,2 @@
-2024/09/21-09:27:51.474 7394 Reusing MANIFEST C:\Users\fortn\OneDrive\Documentos\GitHub\API-WEBHOOK\src\data\session-66eecf774123f753f94cb848\Default\Session Storage/MANIFEST-000001
-2024/09/21-09:27:51.475 7394 Recovering log #3
-2024/09/21-09:27:51.475 7394 Reusing old log C:\Users\fortn\OneDrive\Documentos\GitHub\API-WEBHOOK\src\data\session-66eecf774123f753f94cb848\Default\Session Storage/000003.log 
+2024/09/24-23:46:01.261 3c9c Creating DB C:\Users\fortn\OneDrive\Documentos\GitHub\API_WH\src\data\session-66eecf774123f753f94cb848\Default\Session Storage since it was missing.
+2024/09/24-23:46:01.265 3c9c Reusing MANIFEST C:\Users\fortn\OneDrive\Documentos\GitHub\API_WH\src\data\session-66eecf774123f753f94cb848\Default\Session Storage/MANIFEST-000001
