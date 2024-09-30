@@ -11,17 +11,20 @@ const i18nextMiddleware = require('i18next-express-middleware');
 const globalErrorHandler = require('./controllers/errorController');
 const routers = require('./routes');
 
+/*
 const limiter = rateLimit({
 	windowMs: 15 * 60 * 1000, 
 	limit: 100,
 	message: "ERROR_LIMIT"
 })
-
+*/
 const app = express()
+
+//app.set('trust proxy', true);
 
 app.use(helmet())
 
-app.use('/api',limiter)
+//app.use('/api',limiter)
 
 app.use(express.json({ limit: '10kb' }));
 

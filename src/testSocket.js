@@ -2,9 +2,9 @@
 const io = require("socket.io-client");
 const qrcode = require('qrcode-terminal');
 
+//const serverUrl = "https://majestic.ddnsking.com"; 
 const serverUrl = "http://localhost:3000"; 
-
-token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZWVmYzRlMDYzZWY3YzRiNDY3ZTNlOCIsImlhdCI6MTcyNzU2MjQwNSwiZXhwIjoxNzM1MzM4NDA1fQ.7rlJQC4Gr3pXB6wA2-WzosudAlddogDLCFCi65Y4yzw"
+token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZWVmYzRlMDYzZWY3YzRiNDY3ZTNlOCIsImlhdCI6MTcyNzY3MjUyOCwiZXhwIjoxNzM1NDQ4NTI4fQ.uTS5fg-fGw_xwoX6iWtcQpn9Xu-12y5GmmtpPvn5AVE"
 
 const socket = io(serverUrl,{ query: { token } });
 
