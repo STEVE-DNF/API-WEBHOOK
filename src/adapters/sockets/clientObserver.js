@@ -3,8 +3,6 @@ const formattedPhoneNumber = require('../../utils/formattedPhoneNumber')
 const sessionService = require('../../services/sessionService')
 const whatsappController = require('../controllers/whatsappController')
 
-
-
 class ClientObserver{
   constructor(sessionManager,restaurant,room,system){
 
@@ -42,7 +40,7 @@ class ClientObserver{
 
       this.client.on('message',async (message)=> {
         this.session=await this.getClient()
-        await whatsappController.receivedMessage(this.client,message,{restaurant:this.restaurant_id ,ready:this._ready,active:this.session.active,from:message.from})
+        await whatsappController.receivedMessage(this.client,message,{restaurant:this.restaurant_id ,ready:this._ready,session:this.session._id,active:this.session.active,from:message.from})
       })
 
       this.client.on('ready', async () => {
@@ -65,10 +63,8 @@ class ClientObserver{
       });
     }
     catch(err){
-      console.log(err)
+      console.log("ERROR : ",err)
     }
-
-    
   }
   async initialize(reconnect) {
     this._qrActive = true
@@ -86,6 +82,10 @@ class ClientObserver{
     this.client.initialize()
 
     return this.session
+  }
+  async sendMessageClient(code , phone ,content){
+    const idChat = `${code}${phone}@c.us`
+    await this.client.sendMessage(idChat,content)
   }
   static async reconnectsClient(sessionManager,restaurant,system,room,session) {
 

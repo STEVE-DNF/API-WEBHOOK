@@ -94,7 +94,11 @@ const handleWelcomeOrFarewell = (typeGreeting) => {
 };
 
 
-const handleOrderCreate = async (restaurant_id,customer_id,products) => {
+const handleOrderCreate = async (restaurant_id,customer_id,session_id,products) => {
+
+    const orderPending = await orderService.getOrderPendingService(customer_id)
+
+    if(orderPending.success) throw new appError(translatorNextIO('ORDER_PENDING'), 400)
 
     if(!(products.length > 0 && products.length < 6)) throw new appError(translatorNextIO('PRODUCT_NOT_ORDER'), 400)
 
@@ -105,7 +109,7 @@ const handleOrderCreate = async (restaurant_id,customer_id,products) => {
             return [value]
         }
     }
-    const order =await orderService.createOrderService(restaurant_id,customer_id)
+    const order =await orderService.createOrderService(restaurant_id,customer_id,session_id)
 
     if(!order.success) throw new appError(translatorNextIO(order.code), 400)
 
@@ -448,7 +452,7 @@ const actionHandlers = {
     'order_confirmations_confirm_address': async(restaurant_id,customer_id,_,order_id) => await handleAddressConfirmation(order_id),
     'order_cancelations_cancel_order': async(restaurant_id,customer_id,_,order_id) => await handleCancelation(customer_id,order_id),
     'order_cancelations_cancel_order_with_support': async(restaurant_id,customer_id,_,order_id) => await handleCancelationOther(restaurant_id,customer_id,order_id),
-    'order_requests_create_order': async(restaurant_id,customer_id,entities)=>{
+    'order_requests_create_order': async(restaurant_id,customer_id,entities,_,session_id)=>{
 
         let categories = await categoryService.getAllCategoryService(restaurant_id,{ active: true })
 
@@ -457,7 +461,7 @@ const actionHandlers = {
         const formatEntities=combineQuantityAndProduct(entities,categories)
 
         const filter = filterEntities(formatEntities,categories)
-        response = await handleOrderCreate(restaurant_id,customer_id,filter)
+        response = await handleOrderCreate(restaurant_id,customer_id,session_id,filter)
         return responseMessageList(response)
     },
     'order_requests_consult_amount': (restaurant_id)=>handleMenu(restaurant_id),//handleOrderRequestsConsultAmount,// FALTA
@@ -671,14 +675,9 @@ const allowedIntentsByOrderStatus = {
 };
 
 
-async function handleOrderRelatedIntent(intent, entities, restaurant_id, customer, order) {
-
-
-    console.log('order',order)
-    console.log('allowedIntentsByOrderStatus',allowedIntentsByOrderStatus[order.status])
-    console.log('intent',intent)
+async function handleOrderRelatedIntent(intent, entities, restaurant_id,session_id,customer_id, order) {
     if (allowedIntentsByOrderStatus[order.status].includes(intent)) {
-        const response = await actionHandlers[intent](restaurant_id, customer._id, entities, order._id);
+        const response = await actionHandlers[intent](restaurant_id, customer_id, entities, order._id,session_id);
         return { res: response, lng: 'es' };
     }
     
@@ -687,14 +686,14 @@ async function handleOrderRelatedIntent(intent, entities, restaurant_id, custome
     if(isOrder){
         switch(intent) {
             case "confirm_all":
-                const respAddress = await handleMainAddressToOrder(customer._id,order._id)
+                const respAddress = await handleMainAddressToOrder(customer_id,order._id)
 
                 console.log("respAddress",respAddress)
                 resp=await handleAddressConfirmation(order._id)
                 return { res: [...resp,respAddress], lng: 'es' };
 
             case "cancel_all":
-                const orderResponse = await customerService.setAddressAddContext(customer._id);
+                const orderResponse = await customerService.setAddressAddContext(customer_id);
                 if(!orderResponse.success) return { res: { code: orderResponse.code, type: 'string'}, lng: 'es' };
                 return { res: [{ code: 'ADDRESS_SELECTION_CANCEL', type: 'string'}], lng: 'es' };
         }
@@ -709,13 +708,13 @@ async function handleOrderRelatedIntent(intent, entities, restaurant_id, custome
     return { res: errorMessages[order.status] || 'DEFAULT', lng: 'es' };
 }
 
-exports.handleIntentAction = async (classify, restaurant_id, customer, location) => {
+exports.handleIntentAction = async (classify, restaurant_id,session_id, customer, location) => {
     const { intent, entities } = classify;
 
     if (customer.context === 'order_context') {
 
         const order = await orderService.getOrderPendingService(customer._id)
-        return await handleOrderRelatedIntent(intent, entities, restaurant_id, customer, order?.data, location);
+        return await handleOrderRelatedIntent(intent, entities, restaurant_id,session_id, customer._id, order?.data, location);
     }
 
     if (customer.context === 'normal_context' && restrictedIntentsWithOrder.includes(intent)) {

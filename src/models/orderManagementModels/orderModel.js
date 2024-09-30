@@ -7,6 +7,7 @@ const {connection} = require('./connectDatabase')
 
 const orderSchema = new Schema({
     order_counter: { type: String},
+    session: { type: Schema.Types.ObjectId, required: [true,"ERROR_MOONGOSE_REQUIRED"], },
     restaurant: { type: Schema.Types.ObjectId, ref: 'restaurant', required: [true,"ERROR_MOONGOSE_REQUIRED"], },
     customer: { type: Schema.Types.ObjectId, ref: "customer" , required: [true,"ERROR_MOONGOSE_REQUIRED"],},
     address:{ type: Schema.Types.ObjectId, ref: 'address'},

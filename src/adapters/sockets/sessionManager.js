@@ -19,7 +19,6 @@ const messageEmit = (io,room,event,{status,messageCode,data})=>{
 }
 
 
-
 class SessionManager{
     static instance = undefined
 
@@ -31,6 +30,16 @@ class SessionManager{
         this.io = io
         this.observers = [];
     }
+
+    async sendMessageObserver(session_id,code,phone,content){
+      const client= this.observers.find((observer)=>String(observer[`session`]['_id'])===String(session_id) && observer.ready === true)
+      if(client){
+        await client.sendMessageClient(code,phone,content)
+        return true
+      }
+      return false
+    }
+
     async addObserver(observer) {
   
 

@@ -35,7 +35,7 @@ exports.receivedMessage = catchAsyncWhatsapp(async (client, message, options) =>
     // Verifica si el mensaje es válido
     if (!message) return;
 
-    const { restaurant: restaurant_id, ready, active } = options;
+    const { restaurant: restaurant_id, session: session_id,ready, active } = options;
     
     const formattedMessage = await typeMessage(client, message);
 
@@ -51,9 +51,12 @@ exports.receivedMessage = catchAsyncWhatsapp(async (client, message, options) =>
         if (formattedMessage.type !== 'location') {
             responseParse = await apiService.parseMessage(restaurant_id, formattedMessage.message);
         }
+        if(!responseParse.success) return { res: responseParse.code, lng: 'es' };
+
         return await actionsService.handleIntentAction(
             responseParse.data,
             restaurant_id,
+            session_id,
             customer.data,
             formattedMessage.location
         );

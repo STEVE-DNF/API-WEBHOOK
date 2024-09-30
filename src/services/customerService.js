@@ -14,6 +14,13 @@ exports.createOrUpdateCustomerService = async (restaurant,code,phone)=>{
     return createResponse({success:true,data:customer})
 }
 
+exports.getCustomerService = async (_id)=>{
+    const customer = await customerRepository.getCustomer({_id})
+    if(!customer) return createResponse({})
+    return createResponse({success:true,data:customer})
+}
+
+
 exports.updateCustomerContext = async (_id, context) => {
     const validContexts = ['order_context', 'address_add_context', 'address_update_context','normal_context'];
 

@@ -1,21 +1,4 @@
-2024/09/28-10:41:54.143 7450 Reusing MANIFEST C:\Users\fortn\OneDrive\Documentos\GitHub\API_WH\src\data\session-66f396e2091dccbc386c32d5\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2024/09/28-10:41:54.143 7450 Recovering log #885
-2024/09/28-10:41:54.263 7450 Reusing old log C:\Users\fortn\OneDrive\Documentos\GitHub\API_WH\src\data\session-66f396e2091dccbc386c32d5\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000885.log 
-2024/09/28-10:41:55.621 7450 Level-0 table #894: started
-2024/09/28-10:41:55.652 7450 Level-0 table #894: 810985 bytes OK
-2024/09/28-10:41:55.653 7450 Delete type=0 #885
-2024/09/28-10:41:55.654 7450 Manual compaction at level-0 from '\x00\xf3\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\xf4\x00\x00\x00' @ 0 : 0; will stop at (end)
-2024/09/28-10:41:57.379 5164 Compacting 1@1 + 5@2 files
-2024/09/28-10:41:57.504 5164 Generated table #895@1: 86017 keys, 2235188 bytes
-2024/09/28-10:41:57.624 5164 Generated table #896@1: 99590 keys, 2251725 bytes
-2024/09/28-10:41:57.715 5164 Generated table #897@1: 35294 keys, 2249797 bytes
-2024/09/28-10:41:57.792 5164 Generated table #898@1: 19910 keys, 2180366 bytes
-2024/09/28-10:41:57.901 5164 Generated table #899@1: 64105 keys, 2191627 bytes
-2024/09/28-10:41:57.901 5164 Compacted 1@1 + 5@2 files => 11108703 bytes
-2024/09/28-10:41:57.902 5164 compacted to: files[ 0 0 5 0 0 0 0 ]
-2024/09/28-10:41:57.902 5164 Delete type=2 #887
-2024/09/28-10:41:57.902 5164 Delete type=2 #888
-2024/09/28-10:41:57.902 5164 Delete type=2 #889
-2024/09/28-10:41:57.902 5164 Delete type=2 #890
-2024/09/28-10:41:57.902 5164 Delete type=2 #891
-2024/09/28-10:41:57.902 5164 Delete type=2 #894
+2024/09/29-19:02:43.590 79f4 Reusing MANIFEST C:\Users\fortn\OneDrive\Documentos\GitHub\API-WEBHOOK\src\data\session-66f396e2091dccbc386c32d5\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2024/09/29-19:02:43.591 79f4 Recovering log #946
+2024/09/29-19:02:43.648 79f4 Reusing old log C:\Users\fortn\OneDrive\Documentos\GitHub\API-WEBHOOK\src\data\session-66f396e2091dccbc386c32d5\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000946.log 
+2024/09/29-19:02:45.030 6fc8 Manual compaction at level-0 from ' \x01\x01\x00\x00\x00' @ 72057594037927935 : 1 .. ' \x02\x01\x00\x00\x00' @ 0 : 0; will stop at (end)

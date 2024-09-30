@@ -13,7 +13,6 @@ module.exports = (fn) => {
                 }
             }
         } catch (err) {
-            console.log(err);
             await client.sendMessage(options.from, translatorNextIO(err.message || 'ERROR_MESSAGE', undefined, 'es'));
         }
     };
